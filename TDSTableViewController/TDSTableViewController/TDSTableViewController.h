@@ -105,6 +105,10 @@
  * 重置下拉刷新状态
  */
 - (void)stopRefreshAction;
+/**
+ * 上拉刷新需要执行得方法
+ */
+- (void)infiniteScrollingAction;
 
 - (void)refreshTable;
 

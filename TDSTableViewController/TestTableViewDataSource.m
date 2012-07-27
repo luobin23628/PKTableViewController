@@ -7,8 +7,19 @@
 //
 
 #import "TestTableViewDataSource.h"
+#import "TestTableViewItem.h"
+#import "TestTableViewCell.h"
 
 @implementation TestTableViewDataSource
+
+- (Class)tableView:(UITableView *)tableView cellClassForObject:(id)object
+{
+    if ([object isKindOfClass:[TestTableViewItem class]]) {
+        return [TestTableViewCell class];
+    }
+    return [super tableView:tableView cellClassForObject:object];
+}
+
 - (NSString*)titleForError:(NSError*)error{
     return @"title error";
 }

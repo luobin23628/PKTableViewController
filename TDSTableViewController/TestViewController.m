@@ -8,7 +8,7 @@
 
 #import "TestViewController.h"
 #import "TestTableViewDataSource.h"
-#import "TDSTextTableViewItem.h"
+#import "TestTableViewItem.h"
 #import "TDSTableViewSectionObject.h"
 
 @interface TestViewController ()
@@ -22,7 +22,7 @@
     [super createModel];
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.showsPullToRefresh = YES;
-//    self.tableView.showsInfiniteScrolling = YES;
+    self.tableView.showsInfiniteScrolling = YES;
     self.tableView.showsVerticalScrollIndicator = YES;
     
     NSMutableArray *sections= [NSMutableArray array];
@@ -32,7 +32,7 @@
         sectionObject.letter = sectionObject.title;
         NSMutableArray *aItems= [NSMutableArray array];
         for (int j = 0; j <4; j ++) {
-            TDSTextTableViewItem *item = [TDSTextTableViewItem itemWithText:[NSString stringWithFormat:@"[%d][%d]",i,j]];
+            TestTableViewItem *item = [TestTableViewItem itemWithText:[NSString stringWithFormat:@"[%d][%d]",i,j]];
             [aItems addObject:item];
         }
         sectionObject.items = aItems;
@@ -44,10 +44,15 @@
     [testDataSource release];
 //    [self showError:YES];
 }
-
+// 下拉刷新方法
 - (void)pullToRefreshAction
 {
     [self performSelector:@selector(stopRefreshAction) withObject:nil afterDelay:2.0f];
+}
+// load more 方法
+- (void)infiniteScrollingAction
+{
+    NSLog(@"will load more");
 }
 
 - (void)viewDidAppear:(BOOL)animated
