@@ -100,14 +100,14 @@
                                                     target:self
                                                         action:@selector(testUpdateCell)];
 
-    NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:7];
-//    [toolbarItems addObject:space];
+    NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:5];
+
     [toolbarItems addObject:addItem];
     [toolbarItems addObject:space];
     [toolbarItems addObject:delItem];
     [toolbarItems addObject:space];
     [toolbarItems addObject:upItem];
-//    [toolbarItems addObject:space];
+
     [toolBar setItems:[NSArray arrayWithArray:toolbarItems]];
     [space release],[addItem release],[delItem release],[upItem release];
     
@@ -123,7 +123,8 @@
     [selfDataSource tableView:self.tableView
              willInsertObject:addItem
                   atIndexPath:indexPath];
-//    [self refreshTable];    
+//    [self refreshTable];
+
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                           withRowAnimation:UITableViewRowAnimationFade];
@@ -135,13 +136,14 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:TEST_SECTION_INDEX];
     TestTableViewDataSource *selfDataSource = (TestTableViewDataSource*)self.dataSource;
     if (selfDataSource.sections.count > TEST_SECTION_INDEX) {
-//        [self refreshTable];        
+
         TDSTableViewSectionObject *sectionObject = [selfDataSource.sections objectAtIndex:indexPath.section];
         [selfDataSource tableView:self.tableView
                  willRemoveObject:nil
                       atIndexPath:indexPath];
-        [self.tableView beginUpdates];
+//        [self refreshTable];
         
+        [self.tableView beginUpdates];        
         if (sectionObject.items.count <= 0) {
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section]
                           withRowAnimation:UITableViewRowAnimationFade];
@@ -155,11 +157,14 @@
 {
     TestTableViewItem *updateItem = [TestTableViewItem itemWithText:@"update" image:nil];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:TEST_SECTION_INDEX];
+
     TestTableViewDataSource *selfDataSource = (TestTableViewDataSource*)self.dataSource;
     if (selfDataSource.sections.count > TEST_SECTION_INDEX) {
         [selfDataSource tableView:self.tableView
                  willUpdateObject:updateItem
                       atIndexPath:indexPath];
+//        [self refreshTable];
+        
         [self.tableView beginUpdates];
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                               withRowAnimation:UITableViewRowAnimationFade];
@@ -170,7 +175,9 @@
 #pragma mark - Life Cycle
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self.tableView.pullToRefreshView triggerRefresh];
+    if (self.tableView.showsPullToRefresh) {
+        [self.tableView.pullToRefreshView triggerRefresh];
+    }
 }
 - (void)viewDidLoad
 {

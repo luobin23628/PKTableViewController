@@ -27,6 +27,8 @@
     
     BOOL _showTableShadows;
     
+    BOOL _willCreateTableView;
+    
     TDSTableViewDataSource *_dataSource;
     
     TDSSearchDisplayController  *_searchController;

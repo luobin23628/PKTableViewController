@@ -13,7 +13,7 @@
     
 }
 /**
- * 在init结束后设置入口
+ * 在viewDidLoad中添加入口
  */
 - (void)createModel;
 @end

@@ -53,8 +53,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // [super createModel]
-        [self createTableView];
+        
     }
     return self;
 }
@@ -79,48 +78,54 @@
 #pragma mark Private
 - (void)createTableView
 {
-    __block TDSTableViewController *tableViewController = self;
-    if (self.tableView.showsPullToRefresh) {
-        [self.tableView addPullToRefreshWithActionHandler:^{
-            [tableViewController performSelectorOnMainThread:@selector(pullToRefreshAction) withObject:nil waitUntilDone:YES];
-        }];
-        // you can configure how that date is displayed
-        self.tableView.pullToRefreshView.dateFormatter.dateStyle = kCFDateFormatterShortStyle;
-        self.tableView.pullToRefreshView.dateFormatter.timeStyle = kCFDateFormatterShortStyle;
+    if (_willCreateTableView) {
         
-        // you can also display the "last updated" date
-        self.tableView.pullToRefreshView.lastUpdatedDate = [NSDate date];
+        _willCreateTableView = NO;
         
-        self.tableView.pullToRefreshView.dateLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
-        self.tableView.pullToRefreshView.dateLabel.font				= [UIFont systemFontOfSize:12.0f];
-        self.tableView.pullToRefreshView.dateLabel.textColor		= [UIColor darkGrayColor];
-        self.tableView.pullToRefreshView.dateLabel.shadowColor		= [UIColor grayColor];
-        self.tableView.pullToRefreshView.dateLabel.shadowOffset		= CGSizeMake(0,1);
+        __block TDSTableViewController *tableViewController = self;
+        if (self.tableView.showsPullToRefresh) {
+            [self.tableView addPullToRefreshWithActionHandler:^{
+                [tableViewController performSelectorOnMainThread:@selector(pullToRefreshAction) withObject:nil waitUntilDone:YES];
+            }];
+            // you can configure how that date is displayed
+            self.tableView.pullToRefreshView.dateFormatter.dateStyle = kCFDateFormatterShortStyle;
+            self.tableView.pullToRefreshView.dateFormatter.timeStyle = kCFDateFormatterShortStyle;
+            
+            // you can also display the "last updated" date
+            self.tableView.pullToRefreshView.lastUpdatedDate = [NSDate date];
+            
+            self.tableView.pullToRefreshView.dateLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
+            self.tableView.pullToRefreshView.dateLabel.font				= [UIFont systemFontOfSize:12.0f];
+            self.tableView.pullToRefreshView.dateLabel.textColor		= [UIColor darkGrayColor];
+            self.tableView.pullToRefreshView.dateLabel.shadowColor		= [UIColor grayColor];
+            self.tableView.pullToRefreshView.dateLabel.shadowOffset		= CGSizeMake(0,1);
+            
+            self.tableView.pullToRefreshView.titleLabel.autoresizingMask	= UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
+            self.tableView.pullToRefreshView.titleLabel.font				= [UIFont systemFontOfSize:14.0f];;
+            self.tableView.pullToRefreshView.titleLabel.textColor			= [UIColor darkGrayColor];;
+            self.tableView.pullToRefreshView.titleLabel.shadowColor			= [UIColor grayColor];;
+            self.tableView.pullToRefreshView.titleLabel.shadowOffset		= CGSizeMake(0,1);;
+            
+            UIImage *arrowImage = [UIImage imageNamed:@"arrow.png"];
+            self.tableView.pullToRefreshView.arrow.image = arrowImage;
+            self.tableView.pullToRefreshView.arrowColor = [UIColor grayColor];
+            
+            // add logo
+            CGRect pullViewFrame = self.tableView.pullToRefreshView.frame;
+            UIImage		*refreshImage	= [UIImage imageNamed:@"logo.png"];
+            UIImageView *refreshBGView	= [[[UIImageView alloc] initWithImage:refreshImage] autorelease];
+            refreshBGView.frame = CGRectMake((pullViewFrame.size.width - refreshBGView.image.size.width) / 2,
+                                             pullViewFrame.size.height - 58.0f - refreshBGView.image.size.height,
+                                             refreshImage.size.width,
+                                             refreshImage.size.height);
+            [self.tableView.pullToRefreshView addSubview:refreshBGView];
+        }
+        if (self.tableView.showsInfiniteScrolling) {
+            [self.tableView addInfiniteScrollingWithActionHandler:^{
+                [tableViewController performSelectorOnMainThread:@selector(infiniteScrollingAction) withObject:nil waitUntilDone:YES];
+            }];
+        }
         
-        self.tableView.pullToRefreshView.titleLabel.autoresizingMask	= UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
-        self.tableView.pullToRefreshView.titleLabel.font				= [UIFont systemFontOfSize:14.0f];;
-        self.tableView.pullToRefreshView.titleLabel.textColor			= [UIColor darkGrayColor];;
-        self.tableView.pullToRefreshView.titleLabel.shadowColor			= [UIColor grayColor];;
-        self.tableView.pullToRefreshView.titleLabel.shadowOffset		= CGSizeMake(0,1);;
-        
-        UIImage *arrowImage = [UIImage imageNamed:@"arrow.png"];
-        self.tableView.pullToRefreshView.arrow.image = arrowImage;
-        self.tableView.pullToRefreshView.arrowColor = [UIColor grayColor];
-        
-        // add logo
-        CGRect pullViewFrame = self.tableView.pullToRefreshView.frame;
-        UIImage		*refreshImage	= [UIImage imageNamed:@"logo.png"];
-        UIImageView *refreshBGView	= [[[UIImageView alloc] initWithImage:refreshImage] autorelease];
-        refreshBGView.frame = CGRectMake((pullViewFrame.size.width - refreshBGView.image.size.width) / 2,
-                                         pullViewFrame.size.height - 58.0f - refreshBGView.image.size.height,
-                                         refreshImage.size.width,
-                                         refreshImage.size.height);
-        [self.tableView.pullToRefreshView addSubview:refreshBGView];
-    }
-    if (self.tableView.showsInfiniteScrolling) {
-        [self.tableView addInfiniteScrollingWithActionHandler:^{
-            [tableViewController performSelectorOnMainThread:@selector(infiniteScrollingAction) withObject:nil waitUntilDone:YES];
-        }];
     }
 }
 
@@ -260,6 +265,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self createTableView];
     
     if (_lastInterfaceOrientation != self.interfaceOrientation) {
         _lastInterfaceOrientation = self.interfaceOrientation;
@@ -402,8 +408,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)createModel
 {
-    self.tableView.showsPullToRefresh = NO;     // default is NO
-    self.tableView.showsInfiniteScrolling = NO; // default is NO
+    [super createModel];
+    _willCreateTableView = YES;
 }
 - (UITableView*)tableView {
     if (nil == _tableView) {
@@ -413,7 +419,8 @@
         | UIViewAutoresizingFlexibleHeight;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.showsHorizontalScrollIndicator = NO;
-        
+        _tableView.showsPullToRefresh = NO;     // default is NO
+        _tableView.showsInfiniteScrolling = NO; // default is NO
         [self.view addSubview:_tableView];
     }
     return _tableView;
