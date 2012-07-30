@@ -35,6 +35,7 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
 
 - (void)startObservingScrollView;
 - (void)stopObservingScrollView;
+- (UIImage *)arrowImage;
 
 @property (nonatomic, copy) void (^pullToRefreshActionHandler)(void);
 @property (nonatomic, copy) void (^infiniteScrollingActionHandler)(void);
@@ -99,7 +100,7 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
 
 - (UIImageView *)arrow {
     if(!arrow && pullToRefreshActionHandler) {
-        arrow = [[UIImageView alloc] initWithImage:self.arrowImage];
+        arrow = [[UIImageView alloc] initWithImage:[self arrowImage]];
         arrow.frame = CGRectMake(40, 6, 22, 48);
         arrow.backgroundColor = [UIColor clearColor];
     }
@@ -198,7 +199,7 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
 
 - (void)setArrowColor:(UIColor *)newArrowColor {
     arrowColor = newArrowColor;
-    self.arrow.image = self.arrowImage;
+    self.arrow.image = [self arrowImage];
 }
 
 - (void)setTextColor:(UIColor *)newTextColor {
