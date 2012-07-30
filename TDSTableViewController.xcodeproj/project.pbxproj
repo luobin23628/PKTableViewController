@@ -221,12 +221,12 @@
 			children = (
 				2F47AA81159AE10C00F1AAC0 /* TDSTableViewItem.h */,
 				2F47AA82159AE10C00F1AAC0 /* TDSTableViewItem.m */,
-				2F47AA83159AE10C00F1AAC0 /* TDSTableViewLoadMoreItem.h */,
-				2F47AA84159AE10C00F1AAC0 /* TDSTableViewLoadMoreItem.m */,
 				2F47AA85159AE10C00F1AAC0 /* TDSTableViewSectionObject.h */,
 				2F47AA86159AE10C00F1AAC0 /* TDSTableViewSectionObject.m */,
 				2F47AA87159AE10C00F1AAC0 /* TDSTextTableViewItem.h */,
 				2F47AA88159AE10C00F1AAC0 /* TDSTextTableViewItem.m */,
+				2F47AA83159AE10C00F1AAC0 /* TDSTableViewLoadMoreItem.h */,
+				2F47AA84159AE10C00F1AAC0 /* TDSTableViewLoadMoreItem.m */,
 			);
 			path = Item;
 			sourceTree = "<group>";

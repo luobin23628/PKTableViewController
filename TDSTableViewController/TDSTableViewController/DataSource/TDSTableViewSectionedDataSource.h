@@ -14,4 +14,8 @@
 
 @property (nonatomic, retain) NSMutableArray	*sections;			// TDSTableViewSectionObject对象数组
 @property (nonatomic, readonly) NSMutableArray	*firstSectionItems;	// 返回第一个section的items数组
+
+- (BOOL)removeItemAtIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)removeItemAtIndexPath:(NSIndexPath *)indexPath andSectionIfEmpty:(BOOL)andSection;
+
 @end

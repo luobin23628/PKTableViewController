@@ -135,9 +135,9 @@
 	return nil;
 }
 
-- (void)removeItemAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)removeItemAtIndexPath:(NSIndexPath *)indexPath
 {
-	[self removeItemAtIndexPath:indexPath andSectionIfEmpty:NO];
+	return [self removeItemAtIndexPath:indexPath andSectionIfEmpty:NO];
 }
 
 - (BOOL)removeItemAtIndexPath:(NSIndexPath *)indexPath andSectionIfEmpty:(BOOL)andSection
@@ -146,7 +146,7 @@
 		TDSTableViewSectionObject *sectionObject = [_sections objectAtIndex:indexPath.section];
 		[sectionObject.items removeObjectAtIndex:indexPath.row];
 
-		if (andSection && !sectionObject.items.count) {
+		if (andSection && sectionObject.items.count == 0) {
 			[_sections removeObjectAtIndex:indexPath.section];
 			return YES;
 		}
@@ -156,12 +156,47 @@
 }
 - (NSIndexPath *)tableView:(UITableView *)tableView willUpdateObject:(id)object atIndexPath:(NSIndexPath *)indexPath
 {
+    NSAssert(object != nil, @"tableview updateObject is nil !!!");
     if (_sections.count > indexPath.section) {
         TDSTableViewSectionObject *sectionObject = [_sections objectAtIndex:indexPath.section];        
         if (sectionObject.items.count > indexPath.row) {
             [sectionObject.items replaceObjectAtIndex:indexPath.row withObject:object];
         }        
     }
+    return indexPath;
+}
+- (NSIndexPath *)tableView:(UITableView *)tableView willInsertObject:(id)object atIndexPath:(NSIndexPath *)indexPath
+{
+    NSAssert(object != nil, @"tableview insertObject is nil !!!");
+    TDSTableViewSectionObject *sectionObject = nil;
+    if (_sections.count < indexPath.section) {
+        // ADD section
+        sectionObject = [[TDSTableViewSectionObject alloc] init];
+        sectionObject.items = [NSMutableArray arrayWithObject:object];
+        [_sections insertObject:sectionObject atIndex:indexPath.section];
+    }else{
+        NSAssert(indexPath != nil , @"indexPath is nil !!!");
+        sectionObject = [[_sections objectAtIndex:indexPath.section] retain];
+        [sectionObject.items insertObject:object atIndex:indexPath.row];
+        [_sections replaceObjectAtIndex:indexPath.section withObject:sectionObject];
+        [sectionObject release];
+    }
+
+    return indexPath;
+}
+- (NSIndexPath *)tableView:(UITableView *)tableView willRemoveObject:(id)object atIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath != nil) {
+        [self removeItemAtIndexPath:indexPath andSectionIfEmpty:YES];
+    }else if(object != nil) {
+        indexPath = [self tableView:tableView indexPathForObject:object];
+        if (indexPath != nil) {
+            [self removeItemAtIndexPath:indexPath andSectionIfEmpty:YES];
+        }
+    }else{
+        NSAssert(indexPath == nil && object == nil, @"object and indexPath are nil !!!");
+    }
+    // If Object Not Founded ==> return nil
     return indexPath;
 }
 

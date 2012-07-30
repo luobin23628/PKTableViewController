@@ -15,11 +15,12 @@
 	return 50.0f;
 }
 
-- (void) layoutSubviews {
-	[super layoutSubviews];
-    self.backgroundColor = [UIColor clearColor];
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    self.headerImgView.image = nil;
+    self.detailTextLabel.text = nil;
 }
-
 - (void)setObject:(id)object {
     [super setObject:object];
     if (object == nil) return;
