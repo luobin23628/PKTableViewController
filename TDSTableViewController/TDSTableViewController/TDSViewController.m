@@ -14,31 +14,11 @@
 {
     [super dealloc];
 }
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super init];
-    if (self)
-    {
-        self.view.frame = frame;
-        [self createModel];
-    }
-    return self;
-}
 
-- (id)init
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super init];
-    if (self) 
-    {
-        [self createModel];
-    }
-    return self;
-}
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) 
-    {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
         [self createModel];
     }
     return self;

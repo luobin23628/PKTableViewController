@@ -19,7 +19,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    TestViewController *viewController = [[TestViewController alloc] initWithFrame:self.view.bounds];
+    TestViewController *viewController = [[TestViewController alloc] init];
+    viewController.view.frame = self.view.bounds;
 //    viewController.view.backgroundColor = [UIColor blueColor];
     [self.view addSubview:viewController.view];
 }

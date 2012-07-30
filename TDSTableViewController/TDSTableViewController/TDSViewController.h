@@ -13,11 +13,6 @@
     
 }
 /**
- * hehehehe
- */
-
-- (id)initWithFrame:(CGRect)frame;
-/**
  * 在init结束后设置入口
  */
 - (void)createModel;
