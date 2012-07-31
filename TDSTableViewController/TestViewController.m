@@ -53,12 +53,12 @@
     
 //    [self refreshTable];
 
-    [self addTestBtns];
 }
 // 下拉刷新方法
 - (void)pullToRefreshAction
 {
-    [self performSelector:@selector(stopRefreshAction) withObject:nil afterDelay:2.0f];
+    [self createModel];
+    [self performSelector:@selector(stopRefreshAction) withObject:nil afterDelay:1.0f];
 }
 // load more 方法
 /*
@@ -124,8 +124,17 @@
              willInsertObject:addItem
                   atIndexPath:indexPath];
 //    [self refreshTable];
-
+    
+    TDSTableViewSectionObject *sectionObject = [selfDataSource.sections objectAtIndex:indexPath.section];
     [self.tableView beginUpdates];
+    if (sectionObject.items.count == 1)
+    {
+        // Should Add new title and new letter
+        sectionObject.title = @"newTltle";
+        sectionObject.letter = @"N";
+        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:indexPath.section]
+                      withRowAnimation:UITableViewRowAnimationFade];
+    }
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                           withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
@@ -144,7 +153,8 @@
 //        [self refreshTable];
         
         [self.tableView beginUpdates];        
-        if (sectionObject.items.count <= 0) {
+        if (sectionObject.items.count <= 0)
+        {
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section]
                           withRowAnimation:UITableViewRowAnimationFade];
         }
@@ -159,7 +169,8 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:TEST_SECTION_INDEX];
 
     TestTableViewDataSource *selfDataSource = (TestTableViewDataSource*)self.dataSource;
-    if (selfDataSource.sections.count > TEST_SECTION_INDEX) {
+    if (selfDataSource.sections.count > TEST_SECTION_INDEX)
+    {
         [selfDataSource tableView:self.tableView
                  willUpdateObject:updateItem
                       atIndexPath:indexPath];
@@ -183,6 +194,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self addTestBtns];
 }
 - (void)viewDidUnload
 {

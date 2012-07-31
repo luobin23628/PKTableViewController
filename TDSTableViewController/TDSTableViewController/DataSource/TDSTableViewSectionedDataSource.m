@@ -9,8 +9,6 @@
 #import "TDSTableViewSectionedDataSource.h"
 #import "TDSTableViewItem.h"
 #import "TDSTableViewSectionObject.h"
-#import "TDSTextTableViewItem.h"
-#import "TDSTextTableViewCell.h"
 
 @interface TDSTableViewSectionedDataSource(Pirvate)
 
@@ -47,10 +45,7 @@
 #pragma mark Class public
 - (Class)tableView:(UITableView *)tableView cellClassForObject:(id)object
 {
-    if ([object isKindOfClass:[TDSTextTableViewItem class]]) {
-        return [TDSTextTableViewCell class];
-    }
-    return [TDSTableViewCell class];
+    return [super tableView:tableView cellClassForObject:object];
 }
 #pragma mark -
 #pragma mark UITableViewDataSource
@@ -169,7 +164,7 @@
 {
     NSAssert(object != nil, @"tableview insertObject is nil !!!");
     TDSTableViewSectionObject *sectionObject = nil;
-    if (_sections.count < indexPath.section) {
+    if (_sections.count <= indexPath.section) {
         // ADD section
         sectionObject = [[TDSTableViewSectionObject alloc] init];
         sectionObject.items = [NSMutableArray arrayWithObject:object];

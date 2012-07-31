@@ -12,7 +12,8 @@
 #import "TDSTableView.h"
 #import "TDSTableViewLoadMoreCell.h"
 #import "TDSTableViewLoadMoreItem.h"
-
+#import "TDSTextTableViewItem.h"
+#import "TDSTextTableViewCell.h"
 
 @implementation TDSTableViewDataSource
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,10 +126,13 @@
     {
 		return [TDSTableViewLoadMoreCell class];
 	}
-    if ([object isKindOfClass:[TDSTableViewItem class]]) 
+    else if ([object isKindOfClass:[TDSTextTableViewItem class]]) {
+        return [TDSTextTableViewCell class];
+    }
+    else if ([object isKindOfClass:[TDSTableViewItem class]])
     {
         return [TDSTableViewCell class];
-    }      
+    }
     return [TDSTableViewCell class];
 }
 
