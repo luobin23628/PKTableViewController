@@ -24,7 +24,7 @@
 		2F47AAA4159AE10C00F1AAC0 /* TDSTableViewLoadMoreItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F47AA84159AE10C00F1AAC0 /* TDSTableViewLoadMoreItem.m */; };
 		2F47AAA5159AE10C00F1AAC0 /* TDSTableViewSectionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F47AA86159AE10C00F1AAC0 /* TDSTableViewSectionObject.m */; };
 		2F47AAA6159AE10C00F1AAC0 /* TDSTextTableViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F47AA88159AE10C00F1AAC0 /* TDSTextTableViewItem.m */; };
-		2F47AAA8159AE10C00F1AAC0 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F47AA8D159AE10C00F1AAC0 /* SVPullToRefresh.m */; };
+		2F47AAA8159AE10C00F1AAC0 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F47AA8D159AE10C00F1AAC0 /* SVPullToRefresh.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		2F47AAA9159AE10C00F1AAC0 /* TDSSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F47AA8F159AE10C00F1AAC0 /* TDSSearchDisplayController.m */; };
 		2F47AAAA159AE10C00F1AAC0 /* TDSTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F47AA91159AE10C00F1AAC0 /* TDSTableViewController.m */; };
 		2F47AAAB159AE10C00F1AAC0 /* TDSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F47AA93159AE10C00F1AAC0 /* TDSViewController.m */; };
