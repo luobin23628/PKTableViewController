@@ -61,6 +61,24 @@
     [self performSelector:@selector(stopRefreshAction) withObject:nil afterDelay:1.0f];
 }
 // load more 方法
+- (void)delayLoadingMore
+{
+    TestTableViewDataSource *dataSource = (TestTableViewDataSource*)self.dataSource;
+    if (dataSource.sections.count >0) {
+        TDSTableViewSectionObject *sectionObject = [dataSource.sections lastObject];
+        NSUInteger index = sectionObject.items.count;
+        for (int i = 0; i < 2; i++) {
+            TestTableViewItem *loadingItem = [TestTableViewItem itemWithText:[NSString stringWithFormat:@"loadingMore：%d",(index+i)]
+                                                                       image:nil];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sectionObject.items.count inSection:dataSource.sections.count-1];
+            
+            [dataSource tableView:self.tableView
+                 willInsertObject:loadingItem
+                      atIndexPath:indexPath];
+        }
+        [self refreshTable];
+    }
+}
 /*
  * 也可以用 TDSTableViewLoadMoreItem实现
  */
@@ -68,6 +86,7 @@
 {
     // TODO:loading status
     NSLog(@"will load more");
+    [self performSelector:@selector(delayLoadingMore) withObject:nil afterDelay:1.0f];
 }
 #pragma mark - Private
 - (void)addTestBtns
