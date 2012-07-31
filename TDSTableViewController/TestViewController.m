@@ -72,11 +72,14 @@
 #pragma mark - Private
 - (void)addTestBtns
 {
-    [self.tableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 60.0f, 0.0f)];
+    CGFloat toolBarHeight = 60.0f;
+    CGRect frame = self.tableView.frame;
+    frame.size.height -= toolBarHeight;
+    self.tableView.frame = frame;
     
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     self.view.bounds.size.height - 60,
-                                                                     self.view.bounds.size.width, 60)];
+                                                                     self.view.bounds.size.height - toolBarHeight,
+                                                                     self.view.bounds.size.width, toolBarHeight)];
     [toolBar setBarStyle:UIBarStyleBlack];
     [toolBar setAutoresizingMask:
      UIViewAutoresizingFlexibleWidth |
@@ -97,8 +100,8 @@
                                                         action:@selector(testDelCell)];
     UIBarItem *upItem =[[UIBarButtonItem alloc] initWithTitle:@"*"
                                                         style:UIButtonTypeCustom
-                                                    target:self
-                                                        action:@selector(testUpdateCell)];
+                                                       target:self
+                                                       action:@selector(testUpdateCell)];
 
     NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:5];
 

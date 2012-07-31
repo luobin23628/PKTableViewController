@@ -35,7 +35,6 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
 
 - (void)startObservingScrollView;
 - (void)stopObservingScrollView;
-- (UIImage *)arrowImage;
 
 @property (nonatomic, copy) void (^pullToRefreshActionHandler)(void);
 @property (nonatomic, copy) void (^infiniteScrollingActionHandler)(void);
@@ -74,6 +73,7 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
     // default styling values
     self.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     self.textColor = [UIColor darkGrayColor];
+    self.arrowColor = [UIColor darkGrayColor];
     
     self.originalScrollViewContentInset = self.scrollView.contentInset;
     
@@ -100,7 +100,7 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
 
 - (UIImageView *)arrow {
     if(!arrow && pullToRefreshActionHandler) {
-        arrow = [[UIImageView alloc] initWithImage:[self arrowImage]];
+        arrow = [[UIImageView alloc] initWithImage:self.arrowImage];
         arrow.frame = CGRectMake(40, 6, 22, 48);
         arrow.backgroundColor = [UIColor clearColor];
     }
@@ -183,23 +183,42 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
     
     [self addSubview:self.arrow];
     
-    self.state = SVPullToRefreshStateHidden;    
+    self.state = SVPullToRefreshStateHidden;
     self.frame = CGRectMake(0, -SVPullToRefreshViewHeight, self.scrollView.bounds.size.width, SVPullToRefreshViewHeight);
 }
-
 - (void)setInfiniteScrollingActionHandler:(void (^)(void))actionHandler {
-    self.originalTableFooterView = [(UITableView*)self.scrollView tableFooterView];
     infiniteScrollingActionHandler = [actionHandler copy];
+    self.state = SVPullToRefreshStateHidden;
+    
     self.showsInfiniteScrolling = YES;
-    self.frame = CGRectMake(0, 0, self.scrollView.bounds.size.width, SVPullToRefreshViewHeight);
-    [(UITableView*)self.scrollView setTableFooterView:self];
-    self.state = SVPullToRefreshStateHidden;    
-    [self layoutSubviews];
+    
+    if ([self.scrollView isKindOfClass:[UITableView class]]) {
+        self.originalTableFooterView = [(UITableView*)self.scrollView tableFooterView];
+        self.frame = CGRectMake(0, 0, self.scrollView.bounds.size.width, SVPullToRefreshViewHeight);
+        [(UITableView*)self.scrollView setTableFooterView:self];
+    }
+    else
+    {
+        [_scrollView addSubview:self];
+    }
+    
+    [self setNeedsLayout];
 }
+
+
+//- (void)setInfiniteScrollingActionHandler:(void (^)(void))actionHandler {
+//    self.originalTableFooterView = [(UITableView*)self.scrollView tableFooterView];
+//    infiniteScrollingActionHandler = [actionHandler copy];
+//    self.showsInfiniteScrolling = YES;
+//    self.frame = CGRectMake(0, 0, self.scrollView.bounds.size.width, SVPullToRefreshViewHeight);
+//    [(UITableView*)self.scrollView setTableFooterView:self];
+//    self.state = SVPullToRefreshStateHidden;
+//    [self layoutSubviews];
+//}
 
 - (void)setArrowColor:(UIColor *)newArrowColor {
     arrowColor = newArrowColor;
-    self.arrow.image = [self arrowImage];
+    self.arrow.image = self.arrowImage;
 }
 
 - (void)setTextColor:(UIColor *)newTextColor {
@@ -232,12 +251,25 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
     self.dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last Updated: %@",), self.lastUpdatedDate?[newDateFormatter stringFromDate:self.lastUpdatedDate]:NSLocalizedString(@"Never",)];
 }
 
+//- (void)setShowsInfiniteScrolling:(BOOL)show {
+//    showsInfiniteScrolling = show;
+//    if(!show)
+//        [(UITableView*)self.scrollView setTableFooterView:self.originalTableFooterView];
+//    else
+//        [(UITableView*)self.scrollView setTableFooterView:self];
+//}
+
 - (void)setShowsInfiniteScrolling:(BOOL)show {
     showsInfiniteScrolling = show;
-    if(!show)
-        [(UITableView*)self.scrollView setTableFooterView:self.originalTableFooterView];
-    else
-        [(UITableView*)self.scrollView setTableFooterView:self];
+    if ([_scrollView isKindOfClass:[UITableView class]]) {
+        if(!show)
+            [(UITableView*)self.scrollView setTableFooterView:self.originalTableFooterView];
+        else
+            [(UITableView*)self.scrollView setTableFooterView:self];
+        
+    }else{
+        self.hidden = !show;
+    }
 }
 
 #pragma mark -
@@ -267,7 +299,7 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
         [self layoutSubviews];
 }
 
-- (void)scrollViewDidScroll:(CGPoint)contentOffset {    
+- (void)scrollViewDidScroll:(CGPoint)contentOffset {
     if(pullToRefreshActionHandler) {
         if (self.state == SVPullToRefreshStateLoading) {
             CGFloat offset = MAX(self.scrollView.contentOffset.y * -1, 0);
@@ -325,11 +357,11 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
         [self.activityIndicatorView stopAnimating];
         [self setScrollViewContentInset:self.originalScrollViewContentInset];
         [self rotateArrow:0 hide:YES];
-        return;   
+        return;
     }
     
     if(infiniteScrollingActionHandler && !self.showsInfiniteScrolling)
-        return;   
+        return;
     
     if(state == newState)
         return;
@@ -367,12 +399,19 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
     else if(infiniteScrollingActionHandler) {
         switch (newState) {
             case SVPullToRefreshStateHidden:
+            {
+                self.hidden = YES;
                 [self.activityIndicatorView stopAnimating];
+            }
                 break;
                 
             case SVPullToRefreshStateLoading:
+            {
+                self.hidden = NO;
                 [self.activityIndicatorView startAnimating];
+                
                 infiniteScrollingActionHandler();
+            }
                 break;
         }
     }
@@ -433,7 +472,7 @@ static char UIScrollViewInfiniteScrollingView;
 }
 
 - (void)setShowsPullToRefresh:(BOOL)showsPullToRefresh {
-    self.pullToRefreshView.showsPullToRefresh = showsPullToRefresh;   
+    self.pullToRefreshView.showsPullToRefresh = showsPullToRefresh;
 }
 
 - (BOOL)showsPullToRefresh {
@@ -450,12 +489,11 @@ static char UIScrollViewInfiniteScrollingView;
 }
 
 - (void)setShowsInfiniteScrolling:(BOOL)showsInfiniteScrolling {
-    self.infiniteScrollingView.showsInfiniteScrolling = showsInfiniteScrolling;   
+    self.infiniteScrollingView.showsInfiniteScrolling = showsInfiniteScrolling;
 }
 
 - (BOOL)showsInfiniteScrolling {
     return self.infiniteScrollingView.showsInfiniteScrolling;
 }
-
 @end
 
