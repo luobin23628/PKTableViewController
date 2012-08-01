@@ -238,13 +238,10 @@
 - (void)loadView 
 {
     [super loadView];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self.dataSource;   
 }
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    self.tableView.backgroundView = nil;
 }
 
 - (void)viewDidUnload {
@@ -414,6 +411,8 @@
 - (UITableView*)tableView {
     if (nil == _tableView) {
         _tableView = [[TDSTableView alloc] initWithFrame:CGRectZero style:_tableViewStyle];
+        _tableView.delegate = self;
+        _tableView.dataSource = self.dataSource;
         _tableView.frame = self.view.bounds;
         _tableView.autoresizingMask =  UIViewAutoresizingFlexibleWidth
         | UIViewAutoresizingFlexibleHeight;
