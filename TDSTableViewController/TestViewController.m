@@ -9,7 +9,6 @@
 #import "TestViewController.h"
 #import "TestTableViewDataSource.h"
 #import "TestTableViewItem.h"
-#import "TDSTableViewSectionObject.h"
 
 #define TEST_SECTION_INDEX 1
 
@@ -29,7 +28,7 @@
     self.tableView.showsPullToRefresh = YES;
     self.tableView.showsInfiniteScrolling = YES;
     self.tableView.showsVerticalScrollIndicator = YES;
-    
+
     // init DataSource
     NSMutableArray *sections= [NSMutableArray array];
     for (int i = 0; i<4; i++) {

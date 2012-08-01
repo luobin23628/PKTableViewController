@@ -14,15 +14,10 @@
 #import "TDSTableViewLoadMoreItem.h"
 #import "TDSTableViewLoadMoreCell.h"
 #import "TDSSearchDisplayController.h"
- 
-@interface TDSTableViewController (delegate);
-- (void)createTableView;
-@end
 
 @interface TDSTableViewController (Private);
-
+- (void)createTableView;
 - (void)loadMoreAction;
-
 @end
 
 @implementation TDSTableViewController
@@ -606,6 +601,10 @@
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+@end
+
+@interface TDSTableViewController (delegate)
 
 @end
 

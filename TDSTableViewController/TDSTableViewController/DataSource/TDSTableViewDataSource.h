@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TDSTableViewSectionObject.h"
 
 @protocol TDSTableViewDataSource <UITableViewDataSource, UISearchDisplayDelegate>
 

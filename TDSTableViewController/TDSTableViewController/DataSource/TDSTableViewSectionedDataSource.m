@@ -8,7 +8,6 @@
 
 #import "TDSTableViewSectionedDataSource.h"
 #import "TDSTableViewItem.h"
-#import "TDSTableViewSectionObject.h"
 
 @interface TDSTableViewSectionedDataSource(Pirvate)
 

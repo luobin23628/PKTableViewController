@@ -30,4 +30,15 @@
 - (UIImage*)imageForError:(NSError*)error{
     return nil;
 }
+
+- (NSArray*)sectionIndexTitlesForTableView:(UITableView*)tableView
+{
+    NSMutableArray *retArray = [NSMutableArray arrayWithCapacity:self.sections.count];
+    [self.sections enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        TDSTableViewSectionObject *sectionObject = (TDSTableViewSectionObject*)obj;
+        [retArray addObject:sectionObject.letter];
+    }];
+    return retArray;
+}
+
 @end
