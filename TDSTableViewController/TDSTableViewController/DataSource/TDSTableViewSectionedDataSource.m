@@ -66,15 +66,28 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	if (_sections.count) {
+	if (_sections.count)
+    {
 		TDSTableViewSectionObject *sectionObject = [_sections objectAtIndex:section];
-        if (sectionObject.letter) {
-            return sectionObject.letter;            
+        if (sectionObject.title)
+        {
+            return sectionObject.title;            
         }
 	} 
     return nil;
 }
-
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if (_sections.count)
+    {
+		TDSTableViewSectionObject *sectionObject = [_sections objectAtIndex:section];
+        if (sectionObject.footerTitle)
+        {
+            return sectionObject.footerTitle;
+        }
+	}
+    return nil;
+}
 #pragma mark -
 #pragma mark TDSTableViewDataSource
 

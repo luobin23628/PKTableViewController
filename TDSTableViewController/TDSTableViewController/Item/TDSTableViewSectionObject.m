@@ -13,13 +13,14 @@
 @synthesize title = _title;
 @synthesize userInfo = _userInfo;
 @synthesize items = _items;
-
+@synthesize footerTitle = _footerTitle;
 
 - (void)dealloc{
     self.letter = nil;
     self.title = nil;
     self.userInfo = nil;
     self.items = nil;
+    self.footerTitle = nil;
     [super dealloc];
 }
 

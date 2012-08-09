@@ -8,16 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TDSTableViewSectionObject : NSObject {
-    NSString *_letter;
-    NSString *_title;
-    id _userInfo;
-    NSMutableArray *_items;
-}
+@interface TDSTableViewSectionObject : NSObject
 
 @property (nonatomic, copy) NSString *letter;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, retain) id userInfo;
 @property (nonatomic, retain) NSMutableArray *items;
-
+@property (nonatomic, copy) NSString *footerTitle;
 @end
