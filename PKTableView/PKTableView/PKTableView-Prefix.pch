@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'PKTableView' target in the 'PKTableView' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import "PKTableViewKit.h"
+#endif
