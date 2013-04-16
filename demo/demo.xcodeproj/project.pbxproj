@@ -23,7 +23,6 @@
 		2FE50997171D328400A452E0 /* TestTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE50990171D328400A452E0 /* TestTableViewDataSource.m */; };
 		2FE50998171D328400A452E0 /* TestTableViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE50993171D328400A452E0 /* TestTableViewItem.m */; };
 		2FE50999171D328400A452E0 /* TestSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE50995171D328400A452E0 /* TestSearchViewController.m */; };
-		2FE509A4171D3ADC00A452E0 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FE509A3171D3ADC00A452E0 /* libc++abi.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +68,6 @@
 		2FE50993171D328400A452E0 /* TestTableViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTableViewItem.m; sourceTree = "<group>"; };
 		2FE50994171D328400A452E0 /* TestSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSearchViewController.h; sourceTree = "<group>"; };
 		2FE50995171D328400A452E0 /* TestSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSearchViewController.m; sourceTree = "<group>"; };
-		2FE509A3171D3ADC00A452E0 /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "usr/lib/libc++abi.dylib"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +75,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FE509A4171D3ADC00A452E0 /* libc++abi.dylib in Frameworks */,
 				2FE50987171D31C900A452E0 /* QuartzCore.framework in Frameworks */,
 				2FE50983171D2F6300A452E0 /* libPKTableView.a in Frameworks */,
 				2FE508DB171D026800A452E0 /* UIKit.framework in Frameworks */,
@@ -92,7 +89,6 @@
 		2FE508CE171D026800A452E0 = {
 			isa = PBXGroup;
 			children = (
-				2FE509A3171D3ADC00A452E0 /* libc++abi.dylib */,
 				2FE50986171D31C900A452E0 /* QuartzCore.framework */,
 				2FE508E0171D026800A452E0 /* demo */,
 				2FE508D9171D026800A452E0 /* Frameworks */,
