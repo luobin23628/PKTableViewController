@@ -1,6 +1,6 @@
-TDSTableViewController
+PKTableViewController
 ======================
 
-Based on Three 20 TableViewController 
+Based on Three20
 
-Important note if your project doesn’t use ARC: you must add the -fobjc-arc compiler flag to SVPullToRefresh.m in Target Settings > Build Phases > Compile Sources.
+Important note : if your project doesn’t use ARC: you must add the -fobjc-arc compiler flag to all sources in Target Settings > Build Phases > Compile Sources.
